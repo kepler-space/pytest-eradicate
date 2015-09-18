@@ -4,7 +4,7 @@ if __name__ == "__main__":
     setup(
         name='pytest-eradicate',
         description='pytest plugin to check for commented out code',
-        long_description=open(os.path.join(os.path.dirname(__file__), "README.md")).read()),
+        long_description=open(os.path.join(os.path.dirname(__file__), "README.md")).read(),
         license="MIT license",
         version='0.0.3',
         author='Johan Bloemberg',
