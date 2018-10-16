@@ -12,7 +12,7 @@ install via::
 
 if you then type::
 
-    py.test --eradicade
+    py.test --eradicate
     
 every file ending in ``.py`` will be discovered and checked
 for commented out code.
