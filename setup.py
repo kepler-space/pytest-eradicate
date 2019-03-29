@@ -14,7 +14,7 @@ if __name__ == "__main__":
         url='https://github.com/aequitas/pytest-eradicate',
         py_modules=['pytest_eradicate'],
         entry_points={'pytest11': ['eradicate = pytest_eradicate']},
-        install_requires=['pytest-cache', 'pytest>=2.4.2', 'eradicate', ],
+        install_requires=['pytest-cache', 'pytest>=2.4.2', 'eradicate<=0.2.1', ],
         classifiers=[
             'Programming Language :: Python',
             'Programming Language :: Python :: 2.6',
