@@ -2,7 +2,7 @@ import pytest
 import eradicate
 from io import StringIO
 
-__version__ = '0.0.1'
+__version__ = '0.0.4'
 
 HISTKEY = "eradicate/mtimes"
 
@@ -11,6 +11,8 @@ def pytest_addoption(parser):
     group = parser.getgroup("general")
     group.addoption('--eradicate', action='store_true',
                     help="run eradicate on files")
+    group.addoption('--aggressive', action='store_true', default=False,
+                    help="Make more aggressive changes. This may result in false positives")
 
 
 def pytest_sessionstart(session):
@@ -51,10 +53,10 @@ class EradicateItem(pytest.Item, pytest.File):
     def runtest(self):
         out = StringIO()
 
-        class Args():
+        class Args(object):
             in_place = False
+            aggressive = self.config.option.aggressive
         args = Args()
-
         eradicate.fix_file(str(self.fspath), args, out)
 
         out.seek(0)
@@ -72,4 +74,4 @@ class EradicateItem(pytest.Item, pytest.File):
         return super(EradicateItem, self).repr_failure(excinfo)
 
     def reportinfo(self):
-        return (self.fspath, -1, "Commented out code found")
+        return self.fspath, -1, "Commented out code found"

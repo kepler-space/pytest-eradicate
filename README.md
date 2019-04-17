@@ -12,10 +12,17 @@ install via::
 
 if you then type::
 
-    py.test --eradicate
+    pytest --eradicate
     
 every file ending in ``.py`` will be discovered and checked
 for commented out code.
+
+There is also the option::
+
+    pytest --eradicate --aggressive
+    
+make more aggressive changes. This may result in false positives.
+Added in order to update to the last version of eradicate like it seems to be the default mode.
 
 Eradicate
 ---------
