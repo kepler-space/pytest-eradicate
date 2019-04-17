@@ -1,5 +1,8 @@
 import os
 
+# this is expected to fail when running pytest --eradicate setup.py
+# 1 == 1
+
 from setuptools import setup
 
 if __name__ == "__main__":

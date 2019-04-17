@@ -3,6 +3,11 @@ pytest-eradicate
 
 [Pytest](http://pytest.org/) plugin for detecting commented out code in python files.
 
+Changes
+-------
+
+- **0.0.4** made eradicate 1.0 compatible, added `--agressive` (thanks to @avallbona)
+
 Usage
 ---------
 
@@ -13,14 +18,14 @@ install via::
 if you then type::
 
     pytest --eradicate
-    
+
 every file ending in ``.py`` will be discovered and checked
 for commented out code.
 
 There is also the option::
 
     pytest --eradicate --aggressive
-    
+
 make more aggressive changes. This may result in false positives.
 Added in order to update to the last version of eradicate like it seems to be the default mode.
 
