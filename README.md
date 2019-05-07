@@ -1,3 +1,5 @@
+[![pypi](https://img.shields.io/pypi/v/pytest-eradicate.svg)](https://pypi.python.org/pypi/pytest-eradicate/)
+
 pytest-eradicate
 ===============================================================
 
