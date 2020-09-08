@@ -8,6 +8,7 @@ pytest-eradicate
 Changes
 -------
 
+- **0.0.5** added compatability for Pytest 5.4 and higher
 - **0.0.4** made eradicate 1.0 compatible, added `--agressive` (thanks to @avallbona)
 
 Usage
