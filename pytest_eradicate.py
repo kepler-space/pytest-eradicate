@@ -24,7 +24,10 @@ def pytest_sessionstart(session):
 def pytest_collect_file(path, parent):
     config = parent.config
     if config.option.eradicate and path.ext == '.py':
-        return EradicateItem(path, parent)
+        if hasattr(EradicateItem, "from_parent"):
+            return EradicateItem.from_parent(parent, fspath=path)
+        else:
+            return EradicateItem(parent, path)
 
 
 def pytest_sessionfinish(session):
@@ -33,14 +36,19 @@ def pytest_sessionfinish(session):
         config.cache.set(HISTKEY, config._eradicatemtimes)
 
 
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "eradicate(name): mark eradicate tests"
+    )
+
 class EradicateError(Exception):
     """ indicates an error during eradicate checks. """
 
 
 class EradicateItem(pytest.Item, pytest.File):
 
-    def __init__(self, path, parent):
-        super(EradicateItem, self).__init__(path, parent)
+    def __init__(self, parent, fspath):
+        super(EradicateItem, self).__init__(fspath, parent)
         self.add_marker("eradicate")
 
     def setup(self):
