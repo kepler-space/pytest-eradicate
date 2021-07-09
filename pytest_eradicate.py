@@ -34,7 +34,7 @@ def pytest_sessionstart(session):
     config = session.config
     if config.option.eradicate:
         config._eradicatemtimes = config.cache.get(HISTKEY, {})
-        config._eradictor = eradicate.Eradicator()
+        config._eradicator = eradicate.Eradicator()
 
         class Args(object):
             in_place = False
