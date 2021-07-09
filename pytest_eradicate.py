@@ -2,7 +2,7 @@ import pytest
 import eradicate
 from io import StringIO
 
-__version__ = '0.0.4'
+__version__ = '0.0.6'
 
 HISTKEY = "eradicate/mtimes"
 
@@ -34,7 +34,19 @@ def pytest_sessionstart(session):
     config = session.config
     if config.option.eradicate:
         config._eradicatemtimes = config.cache.get(HISTKEY, {})
+        config._eradictor = eradicate.Eradicator()
 
+        class Args(object):
+            in_place = False
+            aggressive = config.option.aggressive
+            if config.option.whitelist and config.option.whitelist_extend:
+                raise pytest.Collector.CollectError(
+                    "Options --whitelist and --whitelist-extend are mutually exclusive"
+                )
+            whitelist = config.option.whitelist
+            whitelist_extend = config.option.whitelist_extend
+
+        config._eradicator_args = Args()
 
 def pytest_collect_file(path, parent):
     config = parent.config
@@ -76,18 +88,8 @@ class EradicateItem(pytest.Item, pytest.File):
     def runtest(self):
         out = StringIO()
 
-        class Args(object):
-            in_place = False
-            aggressive = self.config.option.aggressive
-            if self.config.option.whitelist and self.config.option.whitelist_extend:
-                raise self.CollectError(
-                    "Options --whitelist and --whitelist-extend are mutually exclusive"
-                )
-            whitelist = self.config.option.whitelist
-            whitelist_extend = self.config.option.whitelist_extend
-
-        args = Args()
-        eradicate.fix_file(str(self.fspath), args, out)
+        self.session.config._eradicator.fix_file(
+            str(self.fspath), self.session.config._eradicator_args, out)
 
         out.seek(0)
         errors = out.read()
