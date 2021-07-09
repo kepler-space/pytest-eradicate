@@ -19,7 +19,7 @@ def pytest_addoption(parser):
         help=('String of "#" separated comment beginnings to whitelist. '
               'Single parts are interpreted as regex. '
               'OVERWRITING the default whitelist: {}').format(
-                  eradicate.DEFAULT_WHITELIST))
+                  eradicate.Eradicator.DEFAULT_WHITELIST))
     group.addoption(
         '--whitelist-extend',
         action="store",
@@ -27,7 +27,7 @@ def pytest_addoption(parser):
               'Single parts are interpreted as regex. '
               'Overwrites --whitelist. '
               'EXTENDING the default whitelist: {} ').format(
-                  eradicate.DEFAULT_WHITELIST))
+                  eradicate.Eradicator.DEFAULT_WHITELIST))
 
 
 def pytest_sessionstart(session):
