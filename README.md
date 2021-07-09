@@ -37,7 +37,7 @@ Added in order to update to the last version of eradicate like it seems to be th
 String of "#" separated comment beginnings to whitelist.
 Single parts are interpreted as regex. OVERWRITES the default whitelist.
 
-    pytest --eradicate --whitelist-extends <whitelist string>
+    pytest --eradicate --whitelist-extend <whitelist string>
 
 String of "#" separated comment beginnings to whitelist.
 Single parts are interpreted as regex. EXTENDS the default whitelist.
