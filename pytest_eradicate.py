@@ -13,6 +13,21 @@ def pytest_addoption(parser):
                     help="run eradicate on files")
     group.addoption('--aggressive', action='store_true', default=False,
                     help="Make more aggressive changes. This may result in false positives")
+    group.addoption(
+        '--whitelist',
+        action="store",
+        help=('String of "#" separated comment beginnings to whitelist. '
+              'Single parts are interpreted as regex. '
+              'OVERWRITING the default whitelist: {}').format(
+                  eradicate.Eradicator.DEFAULT_WHITELIST))
+    group.addoption(
+        '--whitelist-extend',
+        action="store",
+        help=('String of "#" separated comment beginnings to whitelist '
+              'Single parts are interpreted as regex. '
+              'Overwrites --whitelist. '
+              'EXTENDING the default whitelist: {} ').format(
+                  eradicate.Eradicator.DEFAULT_WHITELIST))
 
 
 def pytest_sessionstart(session):
@@ -64,6 +79,13 @@ class EradicateItem(pytest.Item, pytest.File):
         class Args(object):
             in_place = False
             aggressive = self.config.option.aggressive
+            if self.config.option.whitelist and self.config.option.whitelist_extend:
+                raise self.CollectError(
+                    "Options --whitelist and --whitelist-extend are mutually exclusive"
+                )
+            whitelist = self.config.option.whitelist
+            whitelist_extend = self.config.option.whitelist_extend
+
         args = Args()
         eradicate.fix_file(str(self.fspath), args, out)
 

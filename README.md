@@ -25,12 +25,22 @@ if you then type::
 every file ending in ``.py`` will be discovered and checked
 for commented out code.
 
-There is also the option::
+Additional options::
 
     pytest --eradicate --aggressive
 
 make more aggressive changes. This may result in false positives.
 Added in order to update to the last version of eradicate like it seems to be the default mode.
+
+    pytest --eradicate --whitelist <whitelist string>
+
+String of "#" separated comment beginnings to whitelist.
+Single parts are interpreted as regex. OVERWRITES the default whitelist.
+
+    pytest --eradicate --whitelist-extends <whitelist string>
+
+String of "#" separated comment beginnings to whitelist.
+Single parts are interpreted as regex. EXTENDS the default whitelist.
 
 Eradicate
 ---------
